@@ -26,13 +26,13 @@ body {
 h1 {
   font-family: 'Fira Sans', sans-serif;
   font-size: 3em;
-  margin: 2em 1rem;
+  margin: 4em 2em 1rem 1em;
 }
 
 @media only screen and (min-width: 35em){
   h1 {
-      font-size: 7em;
-      margin: 2em 4rem 1em;
+      font-size: 5em;
+      margin: 2em 4rem .5em;
   }
 }
 
@@ -52,6 +52,12 @@ p {
 /* ---- Layout Rules ---- */
 main {
   margin: 10vh 1em 10vh;
+}
+
+@media only screen and (min-width: 860px) {
+  main {
+    /* margin-top: 3rem; */
+  }
 }
 
 .main-hero {
@@ -231,9 +237,26 @@ to {
   color: black;
   display: flex;
   justify-content: space-evenly;
+  /* flex-direction: column; */
+  /* align-items: center; */
   font-size: 2em;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+#navbar__list :not(:last-child) {
+  padding-right: 1rem;
+}
+
+@media only screen and (min-width: 860px) {
+  #navbar__list {
+    /* background-color: red; */
+    /* justify-content: space-evenly; */
+    /* flex-direction: row; */
+
+    /* flex-w */
+  }
 }
 
 #navbar__list a {
@@ -247,6 +270,7 @@ to {
 
 #navbar__list a.active {
   font-size: 1.1em;
+  text-decoration: underline;
 }
 
 summary {

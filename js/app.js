@@ -25,15 +25,6 @@
  *
 */
 
-const debounce = (func, delay) => {
-  let timerId;
-  return (...args) => {
-    const boundFunc = func.bind(this, ...args);
-    clearTimeout(timerId);
-    timerId = setTimeout(boundFunc, delay);
-  }
-};
-
 function createNavElement(staticElement) {
   let navbarLink = document.createElement('a');
   navbarLink.textContent = staticElement.dataset.nav;
@@ -72,9 +63,6 @@ function navbarClickHandler(event) {
     return;
   }
 
-  currentActiveLink.classList.toggle('active');
-  clickedLink.classList.toggle('active');
-
   let currentActiveSection = document.querySelector('section.active');
   let newActiveSection = document.querySelector(`#${clickedLink.dataset.sectionId}`);
   if(currentActiveSection == newActiveSection) {
@@ -87,7 +75,7 @@ function navbarClickHandler(event) {
 
 function observerCallback(entries, observer) {
   for(let entry of entries) {
-    if(entry.isIntersecting) {
+    if(entry.isIntersecting && entry.intersectionRatio > .3) {
       let activeSection = document.querySelector('section.active');
       if(activeSection) {
         activeSection.classList.toggle('active');
@@ -114,14 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let observerOptions = {
     root: null,
     rootMargin: "0px",
-    threshold: .6
+    threshold: [.3, .6]
   };
-  // Need to debounce this call to avoid sections to change its state to active
-  // when you the viewport is automatically scrolling. For example, being in section 1
-  // and clicking section 5 goes through sections 2, 3, and 4 and they should not be active
-  // at any moment through the scrolling event.
+
   let observer = new IntersectionObserver(
-    debounce(observerCallback, 300), observerOptions
+    observerCallback, observerOptions
   );
 
   document.querySelectorAll('section').forEach(section => observer.observe(section));
